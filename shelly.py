@@ -11,6 +11,20 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-u", help="Url to attack")
 args = parser.parse_args()
 
+print """ ___           ___           ___           ___           ___     
+	     /\  \         /\__\         /\  \         /\  \         /\  \    
+	    /::\  \       /:/  /        /::\  \       /::\  \        \:\  \   
+	   /:/\:\  \     /:/__/        /:/\:\  \     /:/\ \  \        \:\  \  
+	  /:/  \:\  \   /::\  \ ___   /:/  \:\  \   _\:\~\ \  \       /::\  \ 
+	 /:/__/_\:\__\ /:/\:\  /\__\ /:/__/ \:\__\ /\ \:\ \ \__\     /:/\:\__\
+
+	  \:\ \:\__\        \::/  /   \:\  /:/  /   \:\ \:\__\     /:/  /     
+	   \:\/:/  /        /:/  /     \:\/:/  /     \:\/:/  /     \/__/      
+	    \::/  /        /:/  /       \::/  /       \::/  /                 
+	     \/__/         \/__/         \/__/         \/__/"""
+print " *-------------------- WebShell 0.1 @matiasmenares --------------------*"
+print ""
+print " "
 if args.u:
     url = args.u
     
@@ -42,6 +56,6 @@ def terminal(input):
 	return target(url)
 
 while True:
-	input = raw_input()
+	input = raw_input("#>")
 	termina = terminal(input)
 	print termina['command']
