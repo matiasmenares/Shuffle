@@ -11,7 +11,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-u", help="Url to attack")
 args = parser.parse_args()
 
-print """ ___           ___           ___           ___           ___     
+print """	      ___           ___           ___           ___           ___     
 	     /\  \         /\__\         /\  \         /\  \         /\  \    
 	    /::\  \       /:/  /        /::\  \       /::\  \        \:\  \   
 	   /:/\:\  \     /:/__/        /:/\:\  \     /:/\ \  \        \:\  \  
@@ -22,8 +22,9 @@ print """ ___           ___           ___           ___           ___
 	   \:\/:/  /        /:/  /     \:\/:/  /     \:\/:/  /     \/__/      
 	    \::/  /        /:/  /       \::/  /       \::/  /                 
 	     \/__/         \/__/         \/__/         \/__/"""
-print " *-------------------- WebShell 0.1 @matiasmenares --------------------*"
-print ""
+print " "
+print "     [*]------------------- WebShell 0.1 @matiasmenares -------------------[*]"
+print " "
 print " "
 if args.u:
     url = args.u
