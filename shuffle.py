@@ -11,8 +11,6 @@ from core.terminal import Terminal
 connsqlite = sqlite3.connect('db/database.db')
 c = connsqlite.cursor()
 # Create table
-c.execute('''CREATE TABLE stocks
-             (date text, trans text, symbol text, qty real, price real)''')
 parser = argparse.ArgumentParser()
 parser.add_argument("-u", help="Url")
 parser.add_argument("-g", help="Generate Shell")
