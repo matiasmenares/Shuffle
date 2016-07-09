@@ -1,4 +1,4 @@
-![Shuffle Logo](https://raw.github.com/plataformatec/devise/master/devise.png)
+![Shuffle Logo](https://raw.githubusercontent.com/matiasmenares/shuffle/master/extra/logo.png)
 ### Version
 0.1 Beta
 ### Installation
