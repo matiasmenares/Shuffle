@@ -58,7 +58,7 @@ def conect():
 		j = json.loads(htmlSource)
 		return j
 	else:
-		print "robot@shelly$> Server Not Respond."
+		print "robot@shuffle[~]$ Server Not Respond."
 		sys.exit(2)
 	
 def server_info():
