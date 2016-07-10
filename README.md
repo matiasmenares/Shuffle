@@ -1,4 +1,4 @@
-![Shuffle Logo](https://raw.githubusercontent.com/matiasmenares/shuffle/master/extra/logo.png)
+![Shuffle Logo](https://raw.githubusercontent.com/matiasmenares/shuffle/master/extras/logo.png)
 
 [![Code Climate](https://codeclimate.com/github/matiasmenares/Shuffle/badges/gpa.svg)](https://codeclimate.com/github/matiasmenares/Shuffle)
 
@@ -51,7 +51,14 @@ localhost@apache[~]$> ls
 app
 lib
 index.php
+localhost@apache[~]$> 
 
+```
+### Extras
+## Banner
+if you want change login banner modify this file:
+```sh
+~/shuffle/extras/banner.txt
 ```
 License
 ----
