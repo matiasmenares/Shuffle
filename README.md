@@ -54,8 +54,8 @@ index.php
 localhost@apache[~]$> 
 
 ```
-### Extras
-## Banner
+## Extras
+### Banner
 if you want change login banner modify this file:
 ```sh
 ~/shuffle/extras/banner.txt
