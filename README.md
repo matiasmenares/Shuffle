@@ -17,7 +17,7 @@ $ python shuffle.py -h
 Command:
   - -g Generate shell
   - -p Setting Password
-  - -u Url to connetec
+  - -u Url to connect
   
 To create a webshell run:
 ```sh
@@ -57,8 +57,6 @@ localhost@apache[~]$>
 to close the conection type exit.
 
 ```sh
-#> Conecction Established, Enjoy!
-
 localhost@apache[~]$> exit
 bye :)
 $ 
