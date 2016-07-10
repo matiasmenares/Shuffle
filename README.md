@@ -54,6 +54,15 @@ index.php
 localhost@apache[~]$> 
 
 ```
+to close the conection type exit.
+
+```sh
+#> Conecction Established, Enjoy!
+
+localhost@apache[~]$> exit
+bye :)
+$ 
+```
 ## Extras
 ### Banner
 if you want change login banner modify this file:
