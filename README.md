@@ -12,6 +12,10 @@ Shuffle 0.1 (Beta) works with Python 2.7 You can run it with:
 ```sh
 $ python shuffle.py
 ```
+to create a webshell run:
+```sh
+$ python shuffle.py -g webshell.php -p 123
+```
 
 License
 ----
