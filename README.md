@@ -41,6 +41,18 @@ And wait to establish connection...
 
 localhost@apache[~]$>
 ```
+
+Now you can run all command !
+
+```sh
+#> Conecction Established, Enjoy!
+
+localhost@apache[~]$> ls
+app
+lib
+index.php
+
+```
 License
 ----
 
