@@ -5,11 +5,25 @@ import os
 import urllib  
 import json
 import argparse
-import sqlite3
+import sqlite3 as lite
 from core.terminal import Terminal
 
-connsqlite = sqlite3.connect('db/database.db')
-c = connsqlite.cursor()
+con = None
+
+try:
+    con = lite.connect('db/database.db')
+    
+    cur = con.cursor()    
+    cur.execute('SELECT SQLITE_VERSION()')
+    
+    data = cur.fetchone()
+    
+    cur.execute("CREATE TABLE Shell(Id INT, Name TEXT, Price INT)")
+    
+except lite.Error, e:
+    
+    print "Error %s:" % e.args[0]
+    sys.exit(1)
 # Create table
 parser = argparse.ArgumentParser()
 parser.add_argument("-u", help="Url")
