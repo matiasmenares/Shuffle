@@ -8,6 +8,10 @@
 
 Only you need is Python 2.7
 
+Clone repository
+```sh
+[~]$ git clone https://github.com/matiasmenares/Shuffle
+```
 ## Getting started
 Shuffle 0.1 (Beta) works with Python 2.7 You can run it with:
 
