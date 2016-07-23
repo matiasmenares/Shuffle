@@ -10,7 +10,7 @@ Only you need is Python 2.7
 
 Clone repository
 ```sh
-[~]$ git clone https://github.com/matiasmenares/Shuffle
+$ git clone https://github.com/matiasmenares/Shuffle
 ```
 ## Getting started
 Shuffle 0.1 (Beta) works with Python 2.7 You can run it with:
@@ -29,7 +29,7 @@ $ python shuffle.py -g webshell.php -p 123
 ```
 And Webshell generate in shuffle folder.
 ```sh
-~/shuffle/webshell.php
+~/shuffle/out/webshell.php
 ```
 ### Connecting
 When you upload shell to compromise machine only you need is run shell with:
