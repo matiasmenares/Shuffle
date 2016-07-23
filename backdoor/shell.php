@@ -1,7 +1,7 @@
 <?php
 #Classes
 	Class System{
-		protected static $password = '123';
+		protected static $password = <password>;
 		
 		public function get_system_password(){
 			return self::$password;

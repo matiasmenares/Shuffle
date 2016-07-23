@@ -22,7 +22,7 @@ class Terminal:
 			return False
 
 	def execute(self,input):
-		targer = urllib.urlopen(self.url+"?a="+input+"&pass="+self.password)
+		targer = urllib.urlopen(self.url+"?cmd="+input+"&pass="+self.password)
 		if targer.getcode() == 200:
 			htmlSource = targer.read()
 			response = json.loads(htmlSource)
