@@ -22,6 +22,7 @@ class Terminal:
 			return False
 
 	def execute(self,input):
+		
 		targer = urllib.urlopen(self.url+"?cmd="+input+"&pass="+self.password)
 		if targer.getcode() == 200:
 			htmlSource = targer.read()

