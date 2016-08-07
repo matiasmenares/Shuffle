@@ -5,7 +5,6 @@ $lifetime=600;
   setcookie(session_name(),session_id(),time()+$lifetime);
 	Class System{
 		<password>;
-		
 		public function get_system_password(){
 			return self::$password;
 		}
