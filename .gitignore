@@ -1,8 +1,8 @@
 __pycache__/
 *.py[cod]
 
-#Osx Temp Files
+# Osx Temp Files
 .DS_Store
 
-#Python Cache File
+# Python Cache File
 *.pyc

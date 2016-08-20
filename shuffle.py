@@ -14,13 +14,13 @@ import argparse
 import sys
 import sqlite3 as lite
 
-try:
-    con = lite.connect('db/database.db')
-    cur = con.cursor()                  
+#try:
+#    con = lite.connect('db/database.db')
+#    cur = con.cursor()                  
     #cur.execute("INSERT INTO Shell VALUES(1,'xxx','xxx','xxx')")
-except lite.Error, e:
-    print "Error %s:" % e.args[0]
-    sys.exit(1)
+#except lite.Error, e:
+#    print "Error %s:" % e.args[0]
+#    sys.exit(1)
 # Create table
 parser = argparse.ArgumentParser()
 parser.add_argument("-u", help="Url")
