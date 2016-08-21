@@ -6,3 +6,5 @@ __pycache__/
 
 # Python Cache File
 *.pyc
+# Out shell 
+out/*
