@@ -4,7 +4,18 @@ class Generator:
 	def __init__(self,name,password):
 		self.password = password
 		self.name = name
-	
+
+	def set_generator(self):
+		isphp = self.name.partition('.')
+		if isphp[2] == "php":
+			print 'Creating Shell file...'
+			creating = self.php()
+		if creating:
+			print('robot@shuffle[~]$> Shell was created! in out/'+self.name)
+		else:
+			print("robot@shuffle[~]$> Something went wrong")
+		sys.exit(1)	
+
 	def php(self):
 		try:
 			file = open("out/"+self.name, 'w')

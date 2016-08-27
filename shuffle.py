@@ -4,9 +4,12 @@
 # Author(s): Matias Menares (Gh0st)
 # The Super Shell
 #
+
 from core.terminal import Terminal
 from core.server import Server
 from core.generate import Generator
+from core.banner import Banner
+
 import os
 import urllib  
 import json
@@ -28,13 +31,8 @@ parser.add_argument("-g", help="Generate Shell")
 parser.add_argument("-p", help="Password")
 args = parser.parse_args()
 #BANNER 
-print "\n"   
-for line in open("extras/banner.txt"):
-	print line,
-print "\n"   
-print "     [*]------------------- WebShell Ver. 0.1 @matiasmenares -------------------[*]\n"
-print "     	  [*]------------------- Fork me on github -------------------[*]\n"
-print "\n"
+banner = Banner()
+banner.get_banner()
 params = parser.parse_args()
 
 def main(params):
@@ -42,18 +40,8 @@ def main(params):
 		url = params.u
 		password = params.p
 	if params.g and params.p:
-		name = params.g
-		password = params.p
-		shell = Generator(name,password)
-		isphp = name.partition('.')
-		if isphp[2] == "php":
-			print 'Creating Shell file...'
-			creating = shell.php()
-		if creating:
-			print('robot@shuffle[~]$> Shell was created! in out/'+name)
-		else:
-			print("robot@shuffle[~]$> Something went wrong")
-	sys.exit(1)	
+		shell = Generator(params.g,params.p)
+		shell.set_generator()
 	if params.u and params.p:			
 		Server = Server(params.u,params.p)
 		con = Server.conect()
