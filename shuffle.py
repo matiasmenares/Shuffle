@@ -40,7 +40,6 @@ def main(params):
 		url = params.u
 		password = params.p
 	if params.g and params.p:
-		shell = Generator(params.g,params.p)
 		shell.set_generator()
 	if params.u and params.p:			
 		Server = Server(params.u,params.p)
@@ -57,6 +56,10 @@ def main(params):
 			print "robot@shuffle[~]$> Response: "+con['error']
 		else:
 			print "robot@shuffle[~]$> Connection fail."
+if __name__ == '__main__':
+	terminal = Terminal(params.u,params.p)
+	shell = Generator(params.g,params.p)
+
 try:
     main(params)
 except (KeyboardInterrupt, EOFError):
