@@ -4,7 +4,7 @@
 # Author(s): Matias Menares (Gh0st)
 # The Super Shell
 #
-
+from core.config import Config
 from core.terminal import Terminal
 from core.server import Server
 from core.generate import Generator
