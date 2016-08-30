@@ -3,13 +3,11 @@
 #
 # Author(s): Matias Menares (Gh0st)
 # The Super Shell
-#
 from core.config import Config
 from core.terminal import Terminal
 from core.server import Server
 from core.generate import Generator
 from core.banner import Banner
-
 import os
 import urllib  
 import json
@@ -17,14 +15,6 @@ import argparse
 import sys
 import sqlite3 as lite
 
-#try:
-#    con = lite.connect('db/database.db')
-#    cur = con.cursor()                  
-    #cur.execute("INSERT INTO Shell VALUES(1,'xxx','xxx','xxx')")
-#except lite.Error, e:
-#    print "Error %s:" % e.args[0]
-#    sys.exit(1)
-# Create table
 parser = argparse.ArgumentParser()
 parser.add_argument("-u", help="Url")
 parser.add_argument("-g", help="Generate Shell")
