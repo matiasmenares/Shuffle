@@ -4,7 +4,7 @@ $lifetime=600;
   session_start();
   setcookie(session_name(),session_id(),time()+$lifetime);
 	Class System{
-		<password>;
+		<password>;		
 		public function get_system_password(){
 			return self::$password;
 		}
@@ -77,12 +77,12 @@ $lifetime=600;
 		}
 		public function set_pwd($pwd = null){
 			if(empty($_SESSION['pwd'])){
-				$_SESSION['pwd'] = getcwd();
+				$_SESSION['pwd'] = trim(getcwd(), "/");
 			}elseif($pwd != null){
 				if($pwd == ".."){
 					$foward = $this->foward_dir();
 					if($this->folder_exist($foward) != false){
-						$_SESSION['pwd'] = $foward;
+						$_SESSION['pwd'] = trim($foward, "/");
 						return true;
 					}else{
 						return false;
@@ -106,7 +106,9 @@ $lifetime=600;
 		}
 		private function foward_dir(){
 			$current = explode("/",$_SESSION['pwd']);
+			
 			unset($current[count($current)-1]);
+			$_SESSION['pwd'] = "/".implode("/", $current)."/";
 			return $this->make_dir($current);
 		}
 		private function rewind_dir(){
@@ -149,4 +151,3 @@ $server = New Server($_GET,$conection->conection());
 		//Response to Shelly				
 		echo json_encode($json);
 	
-?>
