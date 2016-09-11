@@ -20,11 +20,10 @@ parser.add_argument("-u", help="Url")
 parser.add_argument("-g", help="Generate Shell")
 parser.add_argument("-p", help="Password")
 args = parser.parse_args()
-#BANNER 
+#BANNER
 banner = Banner()
 banner.get_banner()
 params = parser.parse_args()
-
 def main(params):
 	if params.u and params.p:
 		url = params.u
