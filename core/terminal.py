@@ -2,6 +2,7 @@ import sys
 import os
 import urllib  
 import json
+from core.server import Server
 
 class Terminal:
 
@@ -22,7 +23,6 @@ class Terminal:
 			return False
 
 	def execute(self,input):
-		
 		targer = urllib.urlopen(self.url+"?cmd="+input+"&pass="+self.password)
 		if targer.getcode() == 200:
 			htmlSource = targer.read()
@@ -31,3 +31,18 @@ class Terminal:
 		else:
 			print "No response"
 			sys.exit(2)
+
+	def loop_terminal(self):
+		Ser = Server(self.url,self.password)
+		con = Ser.conect()
+		if con['response'] == '200':
+			print "#> Conecction Established, Enjoy!\n"
+			server_info = Ser.server_info()
+			while True:
+				send = raw_input(server_info['server_name']+"@"+server_info['user']+"["+server_info['pwd']+"]"+server_info['user_bash']+">")
+				termina = self.terminal(send)
+				print termina['command']
+		elif con['response'] == '302':
+			print "robot@shuffle[~]$> Response: "+con['error']
+		else:
+			print "robot@shuffle[~]$> Connection fail."

