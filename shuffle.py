@@ -5,14 +5,10 @@
 # The Super Shell
 from core.config import Config
 from core.terminal import Terminal
-from core.server import Server
 from core.generate import Generator
 from core.banner import Banner
 import os
-import urllib  
-import json
 import argparse
-import sys
 import sqlite3 as lite
 
 parser = argparse.ArgumentParser()
@@ -25,14 +21,12 @@ banner = Banner()
 banner.get_banner()
 params = parser.parse_args()
 def main(params):
-	if params.u and params.p:
-		url = params.u
-		password = params.p
 	if params.g and params.p:
 		shell.set_generator()
-	if params.u and params.p:
-		conection = Terminal(params.u,params.p)			
-		conection.loop_terminal()
+	elif params.u and params.p:
+		terminal.loop_terminal()
+	else:
+		print("Type -h for help.")
 if __name__ == '__main__':
 	terminal = Terminal(params.u,params.p)
 	shell = Generator(params.g,params.p)

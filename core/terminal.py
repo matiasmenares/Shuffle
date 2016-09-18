@@ -17,7 +17,7 @@ class Terminal:
 
 	def command(self,send):
 		if send == "exit":
-			print "\nBye :)"
+			print "\n#> Connection Closet by user."
 			sys.exit(2)
 		else:
 			return False
