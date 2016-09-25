@@ -24,7 +24,7 @@ def main(params):
 	if params.g and params.p:
 		shell.set_generator()
 	elif params.u and params.p:
-		terminal.loop_terminal()
+		terminal.loop()
 	else:
 		print("Type -h for help.")
 if __name__ == '__main__':

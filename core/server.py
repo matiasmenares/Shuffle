@@ -2,6 +2,9 @@ import sys
 import os
 import urllib  
 import json
+import requests
+import httplib
+from core.config import Config as config
 
 class Server:
 
@@ -9,19 +12,31 @@ class Server:
 		self.url = url
 		self.password = password
 
-	def conect(self):
-		targer = urllib.urlopen(self.url+"?pass="+self.password)
-		if targer.getcode() == 200:
-			htmlSource = targer.read()
-			j = json.loads(htmlSource)
-			return j
-		else:
-			print "robot@shuffle[~]$ Server Not Respond."
+	def connection(self):
+		if self.beat():
+			request = json.loads(requests.post(self.url, data = {'pass': self.password,'cmd': "set-connection-to-host"}).text)
+			if request['response'] == 'true':
+				return {'response': 'true','cookie': request['connection']['cookie']}
+			else:
+				return {'response': False,'msg': request['msg'] }
+	
+	def beat(self):
+		try: 
+			request = urllib.urlopen(self.url)
+			if request.getcode() == 200:
+				return True
+			else:
+				print config.ROBOT_NAME+'@shuffle[~]$> Server Not Respond'
+				sys.exit(2)
+		except:
+			print config.ROBOT_NAME+'@shuffle[~]$> Server Not Respond'
 			sys.exit(2)
-		
-	def server_info(self):
-		targer = urllib.urlopen(self.url+"?pass="+self.password)
-		if targer.getcode() == 200:
-			htmlSource = targer.read()
-			j = json.loads(htmlSource)
-			return j['server_info']	
+
+	def info(self):
+		connection = self.connection()
+		if connection["response"] == "true":
+			request = json.loads(requests.post(self.url, data= {'pass': self.password}).text)
+			return request['server_info']	
+			
+			
+			

@@ -12,9 +12,9 @@ class Generator:
 			print 'Creating Shell file...'
 			creating = self.php()
 		if creating:
-			print(ROBOT_NAME+'@shuffle[~]$> Shell was created! in '+config.OUTPUT_SHELL_DIR+self.name)
+			print(config.ROBOT_NAME+'@shuffle[~]$> Shell was created! in '+config.OUTPUT_SHELL_DIR+self.name)
 		else:
-			print(ROBOT_NAME+"@shuffle[~]$> Something went wrong")
+			print(config.ROBOT_NAME+"@shuffle[~]$> Something went wrong")
 		sys.exit(1)	
 
 	def php(self):

