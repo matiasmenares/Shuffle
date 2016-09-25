@@ -3,7 +3,7 @@
 [![Code Climate](https://codeclimate.com/github/matiasmenares/Shuffle/badges/gpa.svg)](https://codeclimate.com/github/matiasmenares/Shuffle)
 
 ### Version
-0.1 (Beta)
+0.2 (Beta)
 ### Installation
 
 Only you need is Python 2.7
@@ -62,7 +62,7 @@ to close the conection type exit.
 
 ```sh
 localhost@apache[~]$> exit
-bye :)
+#> Connection Closet by user.
 $ 
 ```
 ## Extras
