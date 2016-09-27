@@ -1,7 +1,7 @@
 <?php
 #Classes
-  session_start();
   session_name("shuffle_id");
+  session_start();
 
 	Class System{
 		<password>;		

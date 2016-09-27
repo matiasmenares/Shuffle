@@ -32,10 +32,10 @@ class Server:
 			print config.ROBOT_NAME+'@shuffle[~]$> Server Not Respond'
 			sys.exit(2)
 
-	def info(self):
+	def info(self, cookie):
 		connection = self.connection()
 		if connection["response"] == "true":
-			request = json.loads(requests.post(self.url, data= {'pass': self.password}).text)
+			request = json.loads(requests.post(self.url, data= {'pass': self.password}, cookies=cookie).text)
 			return request['server_info']	
 			
 			

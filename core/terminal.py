@@ -33,9 +33,9 @@ class Terminal:
 		server = self.server.connection()
 		if server['response']:
 			print "#> Conecction Established, Enjoy!\n"
-			info = self.server.info()
 			while True:
-				send = raw_input(info['server_name']+"@"+info['user']+"["+info['pwd']+"]"+info['user_bash']+">")
+				info = self.server.info(server['cookie'])
+				send = raw_input(info['server_name']+"@"+info['user']+"["+info['pwd'].rstrip('\n')+"]"+info['user_bash']+">")
 				terminal = self.terminal(send,server['cookie'])
 				print terminal['command']
 		elif server['response'] == False:
