@@ -5,4 +5,6 @@ class Config(object):
 	SHELL_DIR = "backdoor/"
 	#Shell's Name
 	SHELL_PHP = "shell.php"
+	#repo Url
+	REPO_URL = "https://api.github.com/repos/matiasmenares/shuffle/git/refs/heads/master"
 	

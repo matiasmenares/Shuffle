@@ -7,6 +7,8 @@ from core.config import Config
 from core.terminal import Terminal
 from core.generate import Generator
 from core.banner import Banner
+from core.version import Version
+
 import os
 import argparse
 import sqlite3 as lite
@@ -19,6 +21,8 @@ args = parser.parse_args()
 #BANNER
 banner = Banner()
 banner.get_banner()
+version = Version()
+version.repo_commit_hash()
 params = parser.parse_args()
 def main(params):
 	if params.g and params.p:
