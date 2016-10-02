@@ -1,8 +1,7 @@
 #!/usr/bin/python
-# import requests
 #
 # Author(s): Matias Menares (Gh0st)
-# The Super Shell
+# Backdoor Shell Framework 
 from core.config import Config
 from core.terminal import Terminal
 from core.generate import Generator
@@ -18,12 +17,15 @@ parser.add_argument("-u", help="Url")
 parser.add_argument("-g", help="Generate Shell")
 parser.add_argument("-p", help="Password")
 args = parser.parse_args()
-#BANNER
+#Banner
 banner = Banner()
 banner.get_banner()
+#Version Updater
 version = Version()
-version.repo_commit_hash()
+version.update()
+
 params = parser.parse_args()
+#Init 1
 def main(params):
 	if params.g and params.p:
 		shell.set_generator()
