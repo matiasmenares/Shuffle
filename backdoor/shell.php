@@ -15,7 +15,7 @@
 		}
 		public function connection(){
 			if(!empty($this->pass)){
-				if($this->pass == $this->get_password() AND $_POST['cmd'] == 'set-connection-to-host'){
+				if($this->pass == $this->get_password() AND $_POST['cmd'] == 'shuffle-auth'){
 					$hash = md5(date('r', time()));
 					setcookie("shuffle_id",$hash, time() + (86400 * 30), "/");
 					$response =  array('response' => "true",'connection'=> array('cookie' => array("shuffle_id"=> $hash )));
@@ -146,7 +146,7 @@
 	}
 #Class Instance
 if(isset($_POST['cmd'])){
-	if($_POST['cmd'] == "set-connection-to-host"){
+	if($_POST['cmd'] == "shuffle-auth"){
 		$conection = new Conect($_GET,$_POST);
 		$response = $conection->connection();
 		echo json_encode($response);

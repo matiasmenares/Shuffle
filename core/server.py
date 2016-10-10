@@ -14,7 +14,7 @@ class Server:
 
 	def connection(self):
 		if self.beat():
-			request = json.loads(requests.post(self.url, data = {'pass': self.password,'cmd': "set-connection-to-host"}).text)
+			request = json.loads(requests.post(self.url, data = {'pass': self.password,'cmd': "shuffle-auth"}).text)
 			if request['response'] == 'true':
 				return {'response': 'true','cookie': request['connection']['cookie']}
 			else:

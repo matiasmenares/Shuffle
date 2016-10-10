@@ -7,8 +7,8 @@ class Generator:
 		self.name = name
 
 	def set_generator(self):
-		isphp = self.name.partition('.')
-		if isphp[2] == "php":
+		shell = self.name.partition('.')
+		if shell[2] == "php":
 			print 'Creating Shell file...'
 			creating = self.php()
 		if creating:
