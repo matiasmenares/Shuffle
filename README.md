@@ -84,6 +84,6 @@ Done!
 License
 ----
 
-MIT
+GNU
 
 **Free Software, Hell Yeah!**
