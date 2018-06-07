@@ -35,7 +35,7 @@ And Webshell generate in shuffle folder.
 When you upload shell to compromise machine only you need is run shell with:
 
 ```sh
-$ python shuffle.py -u http://localhost/webshell.php -p 123
+$ python shuffle.py -u http://localhost/webshell.php -p h4x0r
 ```
 
 And wait to establish connection...

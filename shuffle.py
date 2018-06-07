@@ -1,7 +1,8 @@
 #!/usr/bin/python
 #
 # Author(s): Matias Menares (Gh0st)
-# Backdoor Shell Framework 
+# Backdoor Shell Framework
+
 from core.config import Config
 from core.terminal import Terminal
 from core.generate import Generator
