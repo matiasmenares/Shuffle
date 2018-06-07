@@ -25,7 +25,7 @@ Command:
   
 To create a webshell run:
 ```sh
-$ python shuffle.py -g webshell.php -p 123
+$ python shuffle.py -g webshell.php -p h4x0r
 ```
 And Webshell generate in shuffle folder.
 ```sh
